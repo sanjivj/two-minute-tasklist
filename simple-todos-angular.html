@@ -12,21 +12,12 @@
     </header>
     <ul>
       <li ng-repeat="task in tasks" ng-class="{'checked': task.checked}">
+        
         <button class="delete" ng-click="tasks.remove(task)">&times;</button>
-        <input type="checked" ng-model="task.checked" class="toggle-checked"/>
+        <input type="checkbox"  ng-model="task.checked" class="toggle-checked"/>
         <span class="text">{{task.text}}</span>
       </li>
     </ul>
   </div>
-   <div class="section group">
-    	<div class="col span_1_of_3">
-    	This is column 1
-    	</div>
-    	<div class="col span_1_of_3">
-    	This is column 2
-    	</div>
-    	<div class="col span_1_of_3">
-    	This is column 3
-    	</div> 
-   </div>  
+
 </body>
