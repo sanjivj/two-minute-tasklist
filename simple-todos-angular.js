@@ -1,19 +1,32 @@
 Tasks = new Mongo.Collection('tasks');
 
 if (Meteor.isClient) {
-  angular.module('simple-todos', ['angular-meteor']);
+  Accounts.ui.config({
+   passwordSignupFields: "USERNAME_ONLY"
+  });
+  
+  angular.module('simple-todos', ['angular-meteor', 'accounts.ui']);
  
   angular.module('simple-todos').controller('ToDosListCtrl', ['$scope', '$meteor',
     function($scope, $meteor){
       $scope.tasks = $meteor.collection(function(){
-        return Tasks.find({},{sort: {createdAt: -1}})
+        return Tasks.find({}, {sort: {createdAt: -1}})
       });
       
-      $scope.addTask = function(newTask){
-        $scope.tasks.push({
-          text: newTask,
-          createdAt: new Date()
+     $scope.addTask = function(newTask) {
+        $scope.tasks.push( {
+            text: newTask,
+            createdAt: new Date(),             // current time
+            owner: Meteor.userId(),            // _id of logged in user
+            username: Meteor.user().username   // username of logged in user
         });
-      }
+      };
+      
+     $scope.$watch('hideCompleted', function() {
+        if ($scope.hideCompleted)
+          $scope.query = {checked: {$ne: true}};
+        else
+          $scope.query = {};
+      }); 
   }]);
 }
