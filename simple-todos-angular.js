@@ -9,8 +9,9 @@ if (Meteor.isClient) {
  
   angular.module('simple-todos').controller('ToDosListCtrl', ['$scope', '$meteor',
     function($scope, $meteor){
+      
       $scope.tasks = $meteor.collection(function(){
-        return Tasks.find({}, {sort: {createdAt: -1}})
+        return Tasks.find($scope.getReactively('query'), {sort: {createdAt: -1}})
       });
       
      $scope.addTask = function(newTask) {
@@ -28,5 +29,10 @@ if (Meteor.isClient) {
         else
           $scope.query = {};
       }); 
+      
+      
+      $scope.incompleteCount = function () {
+        return Tasks.find({ checked: {$ne: true} }).count();
+      }; 
   }]);
 }

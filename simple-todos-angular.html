@@ -4,7 +4,7 @@
 <body>
   <div class="container" ng-app="simple-todos" ng-controller="ToDosListCtrl">
     <header>
-      <h1>ToDo List</h1>
+      <h1>ToDo List ( {{incompleteCount() }} )</h1>
       
       <login-buttons></login-buttons>
       
@@ -31,5 +31,8 @@
         </span>
       </li>
     </ul>
+    <!--<div>-->
+    <!--  The current user is: {{$root.currentUser.username}}-->
+    <!--</div>-->
   </div>
 </body>
