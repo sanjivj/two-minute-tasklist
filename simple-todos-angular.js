@@ -48,7 +48,6 @@ if (Meteor.isClient) {
           $scope.query = {};
       }); 
       
-      
       $scope.incompleteCount = function () {
         return Tasks.find({ checked: {$ne: true} }).count();
       }; 
@@ -71,7 +70,9 @@ Meteor.methods({
   },
   
   deleteTask: function (taskId) {
-   if (task.private && task.owner !== Meteor.userId()) {
+   var task = Tasks.findOne(taskId);
+   
+   if (task.owner !== Meteor.userId()) {
       // If the task is private, make sure only the owner can delete it
       throw new Meteor.Error('not-authorized');
     }
@@ -80,8 +81,10 @@ Meteor.methods({
   },
   
   setChecked: function (taskId, setChecked) {
-    if (task.private && task.owner !== Meteor.userId()) {
-      // If the task is private, make sure only the owner can delete it
+    var task = Tasks.findOne(taskId);
+    
+    if (task.owner !== Meteor.userId()) {
+      // If the task is private, make sure only the owner can check it off
       throw new Meteor.Error('not-authorized');
     }
  
@@ -95,10 +98,10 @@ Meteor.methods({
       throw new Meteor.Error("not-authorized!");
     }
    
-    Tasks.update(taskId, {$set: {private: setToPrivate}})
-    }
-  });
-
+    Tasks.update(taskId, {$set: {private: setToPrivate}});
+  }
+    
+});
 
 if (Meteor.isServer){
   Meteor.publish('tasks', function(){

@@ -5,20 +5,22 @@
   <div class="container" ng-app="simple-todos" ng-controller="ToDosListCtrl">
     <header>
       <h1>ToDo List ( {{incompleteCount() }} )</h1>
-      
-      <login-buttons></login-buttons>
-      
-      <label class="hide-completed">
-        <input type="checkbox" ng-model="hideCompleted"/>
-        Hide Completed Tasks
-      </label>
-    
-      <form class="newTask" 
-        ng-submit="addTask(newTask); newTask='';" 
-        ng-show="$root.currentUser">
-        <input ng-model="newTask" type="text" name="text" placeholder="Type to add new tasks."/>
-        <!--<input type="submit" value="Submit"/>-->
-      </form>
+      <p> 
+        <login-buttons></login-buttons>
+        
+        <label class="hide-completed">
+          <input type="checkbox" ng-model="hideCompleted"/>
+          Hide Completed Tasks
+        </label>
+      </p> 
+      <span>
+        <form class="newTask" 
+          ng-submit="addTask(newTask); newTask='';" 
+          ng-show="$root.currentUser">
+          <input ng-model="newTask" type="text" name="text" placeholder="Type to add new tasks."/>
+          <!--<input type="submit" value="Submit"/>-->
+        </form>
+      </span> 
     </header>
     
     <ul>
